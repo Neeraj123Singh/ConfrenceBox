@@ -25,10 +25,16 @@ Steps to initialize the project
 4.  run command-> sequelize db:migrate
 5. run command-> sequelize db:seed:all
 6. node server.js
-7. For accessing the api's visit route -- {{baseUrl}}/api-docs
+7. Change the baseUrl in swagger.json file
+8. For accessing the api's visit route -- {{baseUrl}}/api-docs
 
 And Your server will we running on the port you have provided
 
 
-Databse Structure Diagram - 
+Databse Structure Diagram - ER-Diagram.png
 System Design  Diagram -
+
+
+
+Commit 1---
+Added migrations for db Schema and Seeder for roles table

@@ -1,0 +1,67 @@
+{
+  "name": "crm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruloans-crm/ruloans-crm-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ruloans-crm/ruloans-crm-nodejs/issues"
+  },
+  "homepage": "https://github.com/ruloans-crm/ruloans-crm-nodejs#readme",
+  "dependencies": {
+    "acl": "^0.4.11",
+    "aws-sdk": "^2.1262.0",
+    "axios": "^1.2.0",
+    "base64topdf": "^1.1.8",
+    "bcrypt": "^5.1.0",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.20.1",
+    "bull": "^4.10.2",
+    "crypto": "^1.0.1",
+    "csv-parser": "^3.0.0",
+    "deep-email-validator": "^0.1.21",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-basic-auth": "^1.2.1",
+    "express-joi-validation": "^5.0.1",
+    "express-session": "^1.17.3",
+    "faker": "^6.6.6",
+    "fs": "0.0.1-security",
+    "html-pdf": "^3.0.1",
+    "joi": "^17.7.0",
+    "json2csv": "^5.0.7",
+    "jwt-simple": "^0.5.6",
+    "lodash": "^4.17.21",
+    "mocha": "^10.1.0",
+    "moment": "^2.29.4",
+    "mysql2": "^2.3.3",
+    "node-uuid": "^1.4.8",
+    "nodemailer": "^6.8.0",
+    "path": "^0.12.7",
+    "pdf-to-base64": "^1.0.3",
+    "pg": "^8.8.0",
+    "randomstring": "^1.2.3",
+    "sequelize": "^6.25.2",
+    "sequelize-cli": "^6.5.1",
+    "supertest": "^6.3.1",
+    "swagger-ui-express": "^4.5.0",
+    "url": "^0.11.0",
+    "uuid": "^9.0.0",
+    "uuid-buffer": "^1.0.3",
+    "winston": "^3.8.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "jest": "^29.2.2"
+  }
+}
