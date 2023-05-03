@@ -3,7 +3,7 @@ const { sequelize, User, Role } = require('../../models');
 const { QueryTypes } = require('sequelize');
 var uuid = require('node-uuid');
 const { logger } = require('../helpers/logger');
-const { off } = require('process');
+
 
 
 const signUp = async (data) => {
