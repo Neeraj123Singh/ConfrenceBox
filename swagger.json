@@ -273,6 +273,181 @@
           }
         }
       }
+    },
+    "/confrence/createConfrence": {
+      "post": {
+        "summary": "Create Confrence",
+        "description": "Create Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Create Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/createConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/editConfrence": {
+      "post": {
+        "summary": "Edit Confrence",
+        "description": "Edit Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Edit Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/editConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/registerConfrence": {
+      "post": {
+        "summary": "Register Confrence",
+        "description": "Register Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Register Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/registerConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/unRegisterConfrence": {
+      "post": {
+        "summary": "Un Register Confrence",
+        "description": "Un Register Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Un Register Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/registerConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/getAllConfrence": {
+      "post": {
+        "summary": "get All  Confrence",
+        "description": "get All  Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "get All  Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/getAllConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -341,6 +516,23 @@
         }
       }
     },
+    "getAllConfrenceRequest": {
+      "type": "object",
+      "properties": {
+        "pageNumber": {
+          "type": "number",
+          "default": 0
+        },
+        "pageSize": {
+          "type": "number",
+          "default": 100
+        },
+        "search": {
+          "type": "string",
+          "default": ""
+        }
+      }
+    },
     "validateOtpRequest": {
       "type": "object",
       "properties": {
@@ -351,6 +543,65 @@
           "otp": {
             "type": "integer",
             "default": 124567
+          }
+      }
+    },
+    "createConfrenceRequest": {
+      "type": "object",
+      "properties": {
+          "title": {
+            "type": "string",
+            "default": "Confrence A1"
+          },
+          "agenda": {
+            "type": "string",
+            "default": "Environmet Safety"
+          },
+          "date": {
+            "type": "string",
+            "default": "2023-05-03"
+          },
+          "place": {
+            "type": "string",
+            "default": "Jaipur"
+          }
+      }
+    },
+    "editConfrenceRequest": {
+      "type": "object",
+      "properties": {
+          "id": {
+            "type": "string",
+            "default": ""
+          },
+          "title": {
+            "type": "string",
+            "default": "Confrence A1"
+          },
+          "agenda": {
+            "type": "string",
+            "default": "Environmet Safety"
+          },
+          "date": {
+            "type": "string",
+            "default": "2023-05-03"
+          },
+          "place": {
+            "type": "string",
+            "default": "Jaipur"
+          },
+          "status": {
+            "type": "active",
+            "default": ""
+          }
+      }
+    },
+    "registerConfrenceRequest": {
+      "type": "object",
+      "properties": {
+          "confrence_id": {
+            "type": "string",
+            "default": ""
           }
       }
     },

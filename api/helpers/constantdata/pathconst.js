@@ -4,11 +4,13 @@ exports.PagesPath = {
   DocPage: appRoot + "/api/doc/index.html"
 };
 exports.ControllersPath = {
-  UserControllerV1: appRoot + '/api/v1/controllers/user/index.js'
+  UserControllerV1: appRoot + '/api/v1/controllers/user/index.js',
+  ConfrenceControllerV1: appRoot + '/api/v1/controllers/confrence/index.js'
 };
 
 exports.ReqModelsPath = {
-  UserValidationV1: appRoot + "/api/v1/validation/user/index.js"
+  UserValidationV1: appRoot + "/api/v1/validation/user/index.js",
+  ConfrenceValidationV1: appRoot + "/api/v1/validation/confrence/index.js"
 };
 exports.FilesPath = {
   V1Routes: appRoot + "/api/v1/routes/index.js",
@@ -19,5 +21,6 @@ exports.FilesPath = {
 
 
 exports.ServicesPath = {
-  UserService: appRoot + "/api/services/user-services.js"
+  UserService: appRoot + "/api/services/user-services.js",
+  ConfrenceService: appRoot + "/api/services/confrence-services.js"
 }

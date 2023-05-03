@@ -8,7 +8,10 @@ nodeAcl.allow([
       {
         resources: [
           '/changePassword',
-          '/updateUser'
+          '/updateUser',
+          '/getAllConfrence',
+          '/registerConfrence',
+          '/unRegisterConfrence'
         ],
         permissions: ['*']
       },
@@ -20,7 +23,9 @@ nodeAcl.allow([
       {
         resources: [
          '/changeUserStatus',
-         '/getAllUsers'
+         '/getAllUsers',
+         '/createConfrence',
+         '/editConfrence'
         ],
         permissions: ['*']
       },
