@@ -96,6 +96,18 @@ const findUser = async (email) => {
     }
 }
 
+const findUserById = async (id) => {
+    try {
+        let query = ' SELECT u.id as id ,u.name as userName,u.email as user_email,u.otp as otp,u.phone as userPhone,r.role as role FROM users u left join roles r on u.role_id = r.id   where u.id=?';
+        let bindParams = [id];
+        let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+        return user[0];
+    } catch (error) {
+        console.log(error)
+        logger.info(error)
+    }
+}
+
 
 
 
@@ -189,5 +201,6 @@ module.exports = {
     changeUserPassword,
     updateTokenDate,
     findRole,
-    getAllUsersWhereInId
+    getAllUsersWhereInId,
+    findUserById
 };

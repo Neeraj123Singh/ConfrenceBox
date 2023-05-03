@@ -159,6 +159,95 @@ const getAllUsersOfConfrence = async (req, res, next) => {
     }
 }
 
+const updateSpeaker  = async (req, res, next) => {
+    try {
+        const { error } = ConfrenceValidationV1.updateSpeaker.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { conference_id,speaker_id} = req.body;
+            let confrence  = await ConfrenceService.getConfrenceById(conference_id);
+            if(!confrence){
+                ResHelper.apiResponse(res, false, "Confrence Not found or is Not Active", 400, {}, "");
+                return;
+            }
+            let userConfrence = await ConfrenceService.getUserConfrence(conference_id,speaker_id);
+            if(!userConfrence){
+                 ResHelper.apiResponse(res, false, "User not registered to the Confrence", 400, {}, "");
+            }else{
+                 await ConfrenceService.updateSpeaker(conference_id,speaker_id);
+                 ResHelper.apiResponse(res, true, "Success", 201, {}, "");
+            }
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
+
+const voteSpeaker  = async (req, res, next) => {
+    try {
+        const { error } = ConfrenceValidationV1.voteSpeaker.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { conference_id,speaker_id} = req.body;
+            let confrence  = await ConfrenceService.getConfrenceById(conference_id);
+            if(!confrence){
+                ResHelper.apiResponse(res, false, "Confrence Not found or is Not Active", 400, {}, "");
+                return;
+            }
+            let userConfrence = await ConfrenceService.getUserConfrence(conference_id,req.loggedInUser.id);
+            if(!userConfrence){
+                ResHelper.apiResponse(res, false, "  User is  not registered to the Confrence", 400, {}, "");
+                return;
+           }
+            userConfrence = await ConfrenceService.getUserConfrence(conference_id,speaker_id);
+            if(!userConfrence){
+                 ResHelper.apiResponse(res, false, "Speaker  User is  not registered to the Confrence", 400, {}, "");
+            }else{
+                 await ConfrenceService.voteSpeaker(conference_id,speaker_id,req.loggedInUser.id);
+                 ResHelper.apiResponse(res, true, "Success", 201, {}, "");
+            }
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
+
+const topSpeakers  = async (req, res, next) => {
+    try {
+        const { error } = ConfrenceValidationV1.topSpeakers.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { conference_id} = req.body;
+            let confrence  = await ConfrenceService.getConfrenceById(conference_id);
+            if(!confrence){
+                ResHelper.apiResponse(res, false, "Confrence Not found or is Not Active", 400, {}, "");
+                return;
+            }
+          
+            let topSpeakers = await ConfrenceService.topSpeakers(conference_id);
+            let users  = [];
+            for(let i=0;i<topSpeakers.length;i++){
+                let user = await UserService.findUserById(topSpeakers[i].speaker_id);
+                let voteCout = await ConfrenceService.countVote(conference_id,topSpeakers[i].speaker_id);
+                user.voteCout = voteCout;
+                users.push(user);
+            }
+            ResHelper.apiResponse(res, true, "Success", 200, users, "");
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
+
 
 module.exports = {
     createConfrence,
@@ -166,8 +255,10 @@ module.exports = {
     getAllConfrence,
     registerConfrence,
     leaveConfrence,
-    getAllUsersOfConfrence
-
+    getAllUsersOfConfrence,
+    updateSpeaker,
+    voteSpeaker,
+    topSpeakers
 };
 
 

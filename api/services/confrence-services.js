@@ -130,6 +130,33 @@ const getAllUsersOfConfrence = async (conference_id) => {
     return users;
 }
 
+const updateSpeaker = async (conference_id,speaker_id) => {
+    let query = ` update  confrence set speaker_id  = ? where confrence_id = ?  `
+    let bindParams = [speaker_id,conference_id]
+    await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
+}
+
+const voteSpeaker  = async (conference_id,speaker_id,user_id) => {
+    let query = ` update  confrence_speaker set speaker_id = ? where confrence_id = ? and user_id = ?  `
+    let bindParams = [speaker_id,conference_id,user_id]
+    await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
+}
+
+const topSpeakers  = async (conference_id) => {
+    let query = ` select count(user_id) as voteCount, speaker_id from confrence_speaker where confrence_id = ? group by speaker_id order by voteCount desc limit 5 `
+    let bindParams = [conference_id]
+    let speakers  = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    return speakers;
+}
+
+const  countVote =  async (conference_id,speaker_id) => {
+    let query = ` select count(*) as total_count from confrence_speaker where confrence_id = ? and speaker_id = ? `;
+    let bindParams = [conference_id,speaker_id]
+    let total  = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    let total_count = total[0].total_count?total[0].total_count:0;
+    return total_count;
+}
+
 module.exports = {
     createConfrence,
     editConfrence,
@@ -138,5 +165,9 @@ module.exports = {
     getUserConfrence,
     registerConfrence,
     unRegisterConfrence,
-    getAllUsersOfConfrence
+    getAllUsersOfConfrence,
+    updateSpeaker,
+    voteSpeaker,
+    topSpeakers,
+    countVote
 };

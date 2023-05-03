@@ -274,6 +274,41 @@
         }
       }
     },
+    "/confrence/topSpeakers": {
+      "post": {
+        "summary": "Get top Speakers of a Confrence",
+        "description": "Get top Speakers of a Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Get top Speakers of a Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/topSpeakersRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
     "/confrence/createConfrence": {
       "post": {
         "summary": "Create Confrence",
@@ -331,6 +366,76 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/editConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/updateSpeaker": {
+      "post": {
+        "summary": "Update Speaker of Confrence",
+        "description": "Update Speaker of Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Update Speaker of Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateSpeakerRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/voteSpeaker": {
+      "post": {
+        "summary": "Vote For Speaker of Confrence",
+        "description": "Vote For Speaker of Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Vote For Speaker of Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/voteSpeakerRequest"
             }
           }
         ],
@@ -627,6 +732,43 @@
           },
           "status": {
             "type": "active",
+            "default": ""
+          }
+      }
+    },
+    "updateSpeakerRequest": {
+      "type": "object",
+      "properties": {
+          "conference_id": {
+            "type": "string",
+            "default": ""
+          },
+          "speaker_id": {
+            "type": "string",
+            "default": ""
+          }
+
+      }
+    },
+    "voteSpeakerRequest": {
+      "type": "object",
+      "properties": {
+          "conference_id": {
+            "type": "string",
+            "default": ""
+          },
+          "speaker_id": {
+            "type": "string",
+            "default": ""
+          }
+
+      }
+    },
+    "topSpeakersRequest": {
+      "type": "object",
+      "properties": {
+          "conference_id": {
+            "type": "string",
             "default": ""
           }
       }

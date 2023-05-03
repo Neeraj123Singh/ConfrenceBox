@@ -14,9 +14,9 @@ router.post("/editConfrence", AuthHelper.authorize, aclPermissions.getPermission
 router.post("/registerConfrence", AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.registerConfrence);
 router.post("/unRegisterConfrence", AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.leaveConfrence);
 router.post("/getAllUsersOfConfrence",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.getAllUsersOfConfrence)
-// update sepeaker 
-// vote speaker for confrence
-// get top speakers of confrence
+router.post("/updateSpeaker",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.updateSpeaker)
+router.post("/voteSpeaker",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.voteSpeaker)
+router.post("/topSpeakers",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.topSpeakers)
 // run campaign for a conference
 
 

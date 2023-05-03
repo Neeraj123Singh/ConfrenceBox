@@ -26,11 +26,27 @@ const registerConfrence = Joi.object({
     conference_id: Joi.string().required()
 });
 
+const updateSpeaker = Joi.object({
+    conference_id: Joi.string().required(),
+    speaker_id: Joi.string().required()
+});
+
+const  voteSpeaker = Joi.object({
+    conference_id: Joi.string().required(),
+    speaker_id: Joi.string().required()
+});
+const topSpeakers = Joi.object({
+    conference_id: Joi.string().required()
+});
+
 
 module.exports = {
   createConfrence,
   editConfrence,
   getAllConfrence,
-  registerConfrence
+  registerConfrence,
+  updateSpeaker,
+  voteSpeaker,
+  topSpeakers
 }
 
