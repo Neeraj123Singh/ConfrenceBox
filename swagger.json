@@ -204,6 +204,41 @@
         }
       }
     },
+    "/user/getAllUsers": {
+      "post": {
+        "summary": "Get All Users Api",
+        "description": "Get All Users Api api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Get all users api",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/getAllUsersRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
     "/user/changeUserStatus": {
       "post": {
         "summary": "Change User Status",
@@ -274,6 +309,23 @@
             "type": "string",
             "default": "neeraj.singh@novostack.com"
           }
+      }
+    },
+    "getAllUsersRequest": {
+      "type": "object",
+      "properties": {
+        "pageNumber": {
+          "type": "number",
+          "default": 0
+        },
+        "pageSize": {
+          "type": "number",
+          "default": 100
+        },
+        "search": {
+          "type": "string",
+          "default": ""
+        }
       }
     },
     "changePasswordRequest": {

@@ -14,6 +14,7 @@ router.post("/resendOtp", UserControllerV1.resendOtp);
 router.post("/changePassword", AuthHelper.authorize, aclPermissions.getPermissions, UserControllerV1.changePassword);
 router.post("/changeUserStatus", AuthHelper.authorize, aclPermissions.getPermissions, UserControllerV1.changeUserStatus);
 router.post("/updateUser", AuthHelper.authorize, aclPermissions.getPermissions, UserControllerV1.updateUser);
+router.post("/getAllUsers", AuthHelper.authorize, aclPermissions.getPermissions, UserControllerV1.getAllUsers);
 
 
 

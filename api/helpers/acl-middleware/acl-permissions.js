@@ -19,7 +19,8 @@ nodeAcl.allow([
     allows: [
       {
         resources: [
-         '/changeUserStatus'
+         '/changeUserStatus',
+         '/getAllUsers'
         ],
         permissions: ['*']
       },

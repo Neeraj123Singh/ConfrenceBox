@@ -216,6 +216,37 @@ const changePassword = async (req, res, next) => {
     }
 }
 
+const getAllUsers =  async (req, res, next) => {
+    try {
+        const { error } = UserValidationV1.getAllUsers.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { pageNumber,pageSize,search} = req.body;
+            if(!pageNumber){
+                pageNumber = 0;
+            }
+            if(!pageSize){
+                pageSize =100;
+            }
+            let searchList  = [];
+            let where  = [];
+            where.push(['r.role','user']);
+            if(search){
+                searchList.push(['u.name','like',`%${search}%`])
+                searchList.push(['u.email','like',`%${search}%`])
+                searchList.push(['u.phone','like',`%${search}%`])
+            }
+           let users  = await  UserService.getAllUsers(where,searchList,pageNumber*pageSize,pageSize);
+           ResHelper.apiResponse(res, true, "Success", 200, users, "");
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
+
 
 module.exports = {
     signUp,
@@ -224,7 +255,8 @@ module.exports = {
     login,
     changeUserStatus,
     changePassword,
-    updateUser
+    updateUser,
+    getAllUsers
 };
 
 

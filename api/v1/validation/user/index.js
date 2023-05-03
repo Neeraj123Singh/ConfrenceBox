@@ -63,6 +63,13 @@ const updateUser = Joi.object({
   profile_picture:Joi.string().allow(null,'')
 });
 
+const getAllUsers = Joi.object({
+  
+  search: Joi.string().required().allow(null,''),
+  pageNumber:Joi.number().required().allow(null),
+  pageSize:Joi.number().required().allow(null)
+});
+
 
 module.exports = {
   signUp,
@@ -70,6 +77,7 @@ module.exports = {
   validateOtp,
   changePassword ,
   changeUserStatus,
-  updateUser
+  updateUser,
+  getAllUsers
 }
 
