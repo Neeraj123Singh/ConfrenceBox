@@ -20,8 +20,8 @@
   "paths": {
     "/user/signUp": {
       "post": {
-        "summary": "Sign Up as CEO",
-        "description": "Create a CEO or Superadmin account",
+        "summary": "Sign Up ",
+        "description": "Create a  account",
         "produces": [
           "application/json"
         ],
@@ -47,10 +47,97 @@
         }
       }
     },
-    "/user/updatePayoutStatus": {
+    "/user/login": {
       "post": {
-        "summary": "Update User Payout status",
-        "description": "Update User Payout status api's",
+        "summary": "Login ",
+        "description": "Login into existing account ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Give below specified parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/loginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful sign Up",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/resendOtp": {
+      "post": {
+        "summary": "Resend Otp ",
+        "description": "Resend Otp ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Give below specified parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/resendOtpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful resend Otp",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/validateOtp": {
+      "post": {
+        "summary": "Validate Otp ",
+        "description": "Validate Otp ",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Give below specified parameters",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/validateOtpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful validate Otp",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/changePassword": {
+      "post": {
+        "summary": "Change User Paswword",
+        "description": "Change User Paswword api's",
         "produces": [
           "application/json"
         ],
@@ -65,10 +152,80 @@
             "in": "body",
             "name": "body",
             "type": "string",
-            "description": "Update User Payout status",
+            "description": "Change User Paswword",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/updatePayoutStatusRequest"
+              "$ref": "#/definitions/changePasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/updateUser": {
+      "post": {
+        "summary": "Change User Details",
+        "description": "Change User Details",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Change User Details",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/updateUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/changeUserStatus": {
+      "post": {
+        "summary": "Change User Status",
+        "description": "Change User Status api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Change User Paswword",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/changeUserStatusRequest"
             }
           }
         ],
@@ -84,6 +241,92 @@
     }
   },
   "definitions": {
+    "loginRequest": {
+      "type": "object",
+      "properties": {
+          "email": {
+            "type": "string",
+            "default": "neeraj.singh@novostack.com"
+          },
+          "password": {
+            "type": "string",
+            "default": "124567"
+          }
+      }
+    },
+    "changeUserStatusRequest": {
+      "type": "object",
+      "properties": {
+          "email": {
+            "type": "string",
+            "default": "neeraj.singh@novostack.com"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
+          }
+      }
+    },
+    "resendOtpRequest": {
+      "type": "object",
+      "properties": {
+          "email": {
+            "type": "string",
+            "default": "neeraj.singh@novostack.com"
+          }
+      }
+    },
+    "changePasswordRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "default": "124567"
+        },
+        "confrim_password": {
+          "type": "string",
+          "default": "124567"
+        }
+      }
+    },
+    "validateOtpRequest": {
+      "type": "object",
+      "properties": {
+          "email": {
+            "type": "string",
+            "default": "neeraj.singh@novostack.com"
+          },
+          "otp": {
+            "type": "integer",
+            "default": 124567
+          }
+      }
+    },
+    "updateUserRequest": {
+      "type": "object",
+      "properties": {
+         "name": {
+          "type": "string",
+          "default": "Akshay S"
+         },
+         "profession":{
+          "type": "string",
+          "default": "Lawayer"
+         },
+         "description":{
+          "type": "string",
+          "default": "I am a good lawyer"
+         },
+         "profile_picture":{
+          "type": "string",
+          "default": ""
+         },
+          "email": {
+            "type": "string",
+            "default": "neeraj.singh@novostack.com"
+          }
+      }
+    },
     "signUpRequest": {
       "type": "object",
       "properties": {

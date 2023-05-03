@@ -1,6 +1,7 @@
 const { logger } = require("./logger");
 const nodemailer = require('nodemailer');
 let AWS = require('aws-sdk');
+const validate = require('deep-email-validator')
 
 
 
@@ -16,6 +17,11 @@ const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_PASSWORD
     }
 });
+
+exports.validateEmail  = async function(email){
+    let res  =  await validate.validate(email);
+    return res.valid;
+}
 
 exports.sendEmail = function (emailBody, isHtml) {
     let mailOptions;
@@ -39,11 +45,18 @@ exports.sendEmail = function (emailBody, isHtml) {
 
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
+            console.log(error)
         } else {
             logger.info('Email sent: ' + info.response);
             console.log('Email sent: ' + info.response);
         }
     });
+}
+
+exports.minuteDiffence = (date2,date1) => {
+    let diffMs = (date1 - date2);
+    let diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); 
+    return diffMins;
 }
 
 exports.uploadToS3 = async function (userId, file, t, ContentType, typ) {

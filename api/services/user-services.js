@@ -5,11 +5,12 @@ var uuid = require('node-uuid');
 const { logger } = require('../helpers/logger');
 
 
-const signUpCEO = async (data) => {
-    let query = `insert into users(id,email,name,role,phone,password,payout,bank,createdAt,updatedAt) values(uuid_to_bin(?),?,?,uuid_to_bin(?),?,?,?,?,now(),now()) `
-    let bindParams = [uuid.v4(), data.email, data.name, data.role, data.phone, data.password,data.payout,data.bank]
+const signUp = async (data) => {
+    let query = `insert into users(id,email,name,role_id,phone,password,description,profession,profile_picture,otp,otp_created_at,created_at,updated_at) values(?,?,?,?,?,?,?,?,?,?,?,now(),now()) `
+    let bindParams = [uuid.v4(), data.email, data.name, data.role, data.phone, data.password,data.description,data.profession,data.profile_picture,data.otp,data.otpCreatedAt]
+    console.log(bindParams)
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.INSERT });
-    query = `select bin_to_uuid(u.id) as id , u.email as email,u.name as name,u.phone as phone  from users u where email = ?`;
+    query = `select u.id as id , u.email as email,u.name as name,u.phone as phone  from users u where email = ?`;
     bindParams = [data.email];
     let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return user[0];
@@ -27,7 +28,7 @@ const addUser = async (data) => {
 
 const getAllUsers = async (where, search, offset, limit) => {
     let bindParams = [];
-    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.name as userName,u.payout as payout,u.bank as bank, u.createdAt, u.updatedAt, u.isDeleted as isDeleted,u.status as status,s.name as statusName,u.email as userEmail,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c  on u.createdBy = c.id  left join  status s on u.status= s.id ';
+    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.name as userName,u.payout as payout,u.bank as bank, u.createdAt, u.updatedAt, u.isDeleted as isDeleted,u.status as status,s.name as statusName,u.email as user_email,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c  on u.createdBy = c.id  left join  status s on u.status= s.id ';
     let queryCount = ' SELECT count(*) as totalCount  FROM  users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id left join  status s on u.status= s.id';
     let and = false;
     //apply fiter in the query [Neeraj Singh]
@@ -91,20 +92,16 @@ const getAllUsers = async (where, search, offset, limit) => {
 
 const getUserById = async (id) => {
     let bindParams = [id];
-    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.name as userName,u.isDeleted as isDeleted,u.email as userEmail,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName ,u.tokenUpdatedAt as tokenUpdatedAt, c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  where u.id = uuid_to_bin(?) ';
+    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.name as userName,u.isDeleted as isDeleted,u.email as user_email,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName ,u.token_updated_at as tokenUpdatedAt, c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  where u.id = uuid_to_bin(?) ';
     let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return user[0];
 };
 
 const findUser = async (email) => {
     try {
-        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.payout as payout,u.bank as bank,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as userEmail,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where u.email=?';
+        let query = ' SELECT u.id as id ,u.otp_created_at as otp_created_at,u.status as status,u.token_updated_at as token_updated_at,u.password as password,u.name as userName,u.verified as verified,u.email as user_email,u.otp as otp,u.phone as userPhone,r.role as role FROM users u left join roles r on u.role_id = r.id   where u.email=?';
         let bindParams = [email];
         let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
-
-        // query = 'delete from payouts';
-        // user = await sequelize.query(query, { type: QueryTypes.SELECT });
-
         return user[0];
     } catch (error) {
         console.log(error)
@@ -142,7 +139,7 @@ const findUserById = async (id) => {
     }
 }
 const findRole = async (role) => {
-    let query = `select bin_to_uuid(r.id) as id , r.role as role from roles r where role = ?`;
+    let query = `select r.id as id , r.role as role from roles r where role = ?`;
     let bindParams = [role];
     let foundRole = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return foundRole[0];
@@ -156,34 +153,35 @@ const getRoles = async (role) => {
 }
 
 const updateUser = async (where, data) => {
-    let query = `update users set email=?,phone=?,role=uuid_to_bin(?),parent=uuid_to_bin(?),updatedAt =now(),name = ? where email = ?`;
-    let bindParams = [data.email, data.phone, data.role, data.parent, data.name, where.where.email];
+    let query = `update users set name=?,description=?,profession=?,profile_picture=?,token_updated_at = now(),updated_at =now() where email = ?`;
+    let bindParams = [data.name, data.description, data.profession, data.profile_picture,  where.where.email];
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
-    query = `select bin_to_uuid(u.id) as id , u.email as email,u.name as name,u.phone as phone  from users u where email = ?`;
-    bindParams = [data.email];
+    query = `select u.id as id , u.email as email,u.name as name,u.phone as phone  from users u where email = ?`;
+    bindParams = [where.where.email];
     let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return user[0];
 }
 const updateUserOtp = async (where, data) => {
-    let query = `update users set otp=?,otpCreatedAt=?,updatedAt =now() where email = ?`;
+    let query = `update users set otp=?,otp_created_at=?,updated_at =now() where email = ?`;
     let bindParams = [data.otp, data.otpCreatedAt, where.where.email];
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 
 }
-const updateUserValidateOtp = async (where, data) => {
-    let query = `update users set validatedAt =? where email = ?`;
-    let bindParams = [data.otpValidatedAt, where.where.email];
+const updateUserValidateOtp = async (where) => {
+    let query = `update users set otp = null,otp_created_at = null,verified = true  where email = ?`;
+    let bindParams = [ where.where.email];
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 }
-const updateUserDelete = async (where, data) => {
-    let query = `update users set isDeleted =? where email = ?`;
-    let bindParams = [data.isDeleted, where.where.email];
+const updateUserStatus = async (where, data) => {
+    let query = `update users set status =? where email = ?`;
+    let bindParams = [data.status, where.where.email];
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 
 }
 const updateUserPassword = async (where, data) => {
-    let query = `update users set password =? , dummyPassword =?,tokenUpdatedAt=? where email = ?`;
-    let bindParams = [data.password, data.dummyPassword, data.tokenUpdatedAt, where.where.email];
+    let query = `update users set password =? ,token_updated_at=? where email = ?`;
+    let bindParams = [data.password, data.token_updated_at, where.where.email];
+    console.log(bindParams)
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 }
 
@@ -216,7 +214,7 @@ const changeUserPassword = async (email, password, tokenUpdatedAt) => {
 const findUserByPhoneOrEmail = async (email, phone) => {
     try {
 
-        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as userEmail,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where u.email=? or u.phone=? ';
+        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as user_email,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where u.email=? or u.phone=? ';
         let bindParams = [email, phone];
         let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
         return user[0];
@@ -230,7 +228,7 @@ const getParentUsersByRole = async (role) => {
     try {
         const parentRole = findParent(rolesTree, role);
         console.log(role, parentRole)
-        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as userEmail,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role = ? ';
+        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as user_email,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role = ? ';
         let bindParams = [parentRole];
         let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
         return user;
@@ -241,7 +239,7 @@ const getParentUsersByRole = async (role) => {
 }
 const getAllUsersWithRolesIn = async (roles) => {
     try {
-        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as userEmail,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role in (?) ';
+        let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.otpCreatedAt as otpCreatedAt,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as user_email,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role in (?) ';
         let bindParams = [roles];
         let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
         return user;
@@ -252,7 +250,7 @@ const getAllUsersWithRolesIn = async (roles) => {
 }
 
 const updateTokenDate = async (email, tokenUpdatedAt) => {
-    let query = ' update users set tokenUpdatedAt = ? where email = ? ';
+    let query = ' update users set token_updated_at = ? where email = ? ';
     let bindParams = [tokenUpdatedAt, email];
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 }
@@ -263,7 +261,7 @@ const updateUserPhone = async (email, phone) => {
 }
 
 const getFirstUserByRole = async (role) => {
-    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as userEmail,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role = ?  ';
+    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.status as status,s.name as statusName,u.isDeleted as isDeleted ,u.tokenUpdatedAt as tokenUpdatedAt,u.password as password,u.name as userName,u.email as user_email,u.otp as otp,u.dummyPassword as dummyPassword,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName , c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  left join status s on u.status = s.id where r.role = ?  ';
     let bindParams = [role];
     let users = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return users[0];
@@ -282,7 +280,8 @@ const updatePayoutStatus = async (user_id,status) => {
     await sequelize.query(query, { replacements: bindParams, type: QueryTypes.UPDATE });
 }
 module.exports = {
-    signUpCEO,
+    signUp,
+    updateUserPassword,
     findUser,
     findRole,
     updateUser,
@@ -291,8 +290,7 @@ module.exports = {
     getRoles,
     updateUserOtp,
     updateUserValidateOtp,
-    updateUserDelete,
-    updateUserPassword,
+    updateUserStatus,
     getUserById,
     getResetToken,
     deleteResetToken,

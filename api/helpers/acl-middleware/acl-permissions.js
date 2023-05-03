@@ -8,7 +8,7 @@ nodeAcl.allow([
       {
         resources: [
           '/changePassword',
-          
+          '/updateUser'
         ],
         permissions: ['*']
       },
@@ -19,7 +19,7 @@ nodeAcl.allow([
     allows: [
       {
         resources: [
-         
+         '/changeUserStatus'
         ],
         permissions: ['*']
       },

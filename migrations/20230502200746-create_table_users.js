@@ -39,7 +39,7 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull:false
            },
-           profie_picture:{
+           profile_picture:{
             type: Sequelize.STRING
            },
            status:{

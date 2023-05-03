@@ -44,6 +44,7 @@ exports.authorize = async function (req, res, next) {
         Message: "",
         Data: {}
     };
+    
     if (!req.header('Authorization')) {
         resModel.Message = 'Please make sure your request has an Authorization header';
         return res.status(401).send(resModel);
@@ -61,13 +62,12 @@ exports.authorize = async function (req, res, next) {
         return res.status(401).send(resModel);
     }
 
-    let user = await UserService.findUser(payload.user.userEmail);
-    console.log(compareDateString(user.tokenUpdatedAt,payload.user.tokenUpdatedAt))
+    let user = await UserService.findUser(payload.user.user_email);
     if(!user || user.status!=1){
         resModel.Message = 'Invalid Token';
         return res.status(401).send(resModel);
        
-    }else if(!compareDateString(user.tokenUpdatedAt,payload.user.tokenUpdatedAt)){
+    }else if(!compareDateString(user.token_updated_at,payload.user.token_updated_at)){
         resModel.Message = 'Invalid Token';
         return res.status(401).send(resModel);
     }
