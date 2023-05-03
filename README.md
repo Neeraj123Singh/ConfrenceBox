@@ -18,6 +18,13 @@ Technologies Used-
 7- acl - We will use acl model to Authorize the routes( With Acl we can have as many roles as we can . Add provide each role the configuration of the api's that it can access)
 
 
+Scope of the Project
+1. User Authenctication and Authorization
+2. Change Password via otp and Url on mail
+3. Create Confrence and Register
+4. Vote Other USers
+5. Run Email Campaigns to generate Votes for a confrence
+
 
 Steps to initialize the project
 
