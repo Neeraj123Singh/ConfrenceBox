@@ -15,7 +15,7 @@ Technologies Used-
 4. Pm2 - Forcusturing and demon mangemanet to utilise full power of the multicore cpu's available i will use pm2 on the server for running up the instances of my server process. With the help of pm2 we can also store the logs about the process crash or process performance
 5- Ngnix - For load-balancing and reverse-proxy (reverse-proxy to blacklist and white-list ip's and secure the process by hinding the port they are running on) we will be using Ngnix
 6- Joi - For request Validation we will use Joi Package of the npm
-7- acl - We will use acl model to Authorize the routes
+7- acl - We will use acl model to Authorize the routes( With Acl we can have as many roles as we can . Add provide each role the configuration of the api's that it can access)
 
 
 
