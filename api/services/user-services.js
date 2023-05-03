@@ -124,33 +124,9 @@ const deleteResetToken = async (id) => {
     return true;
 }
 
-const createResetToken = async (id, token) => {
-    let query = ' insert into reset_password_link (user_id,reset_token) values (uuid_to_bin(?),?)';
-    let bindParams = [id, token];
-    let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.DELETE });
-    return true;
-}
 
-const findUserById = async (id) => {
-    try {
-        return await User.findOne({ where: { id: id } });
-    } catch (error) {
-        logger.info(error)
-    }
-}
-const findRole = async (role) => {
-    let query = `select r.id as id , r.role as role from roles r where role = ?`;
-    let bindParams = [role];
-    let foundRole = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
-    return foundRole[0];
 
-}
-const getRoles = async (role) => {
-    let query = `select bin_to_uuid(r.id) as id , r.role as role from roles r `;
-    let bindParams = [];
-    let roles = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
-    return roles;
-}
+
 
 const updateUser = async (where, data) => {
     let query = `update users set name=?,description=?,profession=?,profile_picture=?,token_updated_at = now(),updated_at =now() where email = ?`;
