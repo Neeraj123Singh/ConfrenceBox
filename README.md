@@ -35,7 +35,7 @@ Steps to initialize the project
 5. run command-> sequelize db:seed:all
 6. node server.js
 7. Change the baseUrl in swagger.json file
-8. For accessing the api's visit route -- {{baseUrl}}/api-docs
+8. For accessing the api's visit route -- {{baseUrl}}/v1/api-docs
 9. change the connection configuraton for redis in job/index.js file 
 10.node jobs/index.js -- run this command to run the job queue
 
