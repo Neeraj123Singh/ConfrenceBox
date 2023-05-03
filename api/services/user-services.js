@@ -90,12 +90,6 @@ const getAllUsers = async (where, search, offset, limit) => {
     return { users: users, totalCount: totalCount[0].totalCount };
 };
 
-const getUserById = async (id) => {
-    let bindParams = [id];
-    let query = ' SELECT BIN_TO_UUID(u.id) as id ,u.name as userName,u.isDeleted as isDeleted,u.email as user_email,u.phone as userPhone,r.role as role ,p.name as parentName, p.email as parentEmail, c.name as creatorName ,u.token_updated_at as tokenUpdatedAt, c.email as creatorEmail  FROM users u left join roles r on u.role = r.id left join users p on u.parent = p.id left join users c on u.createdBy = c.id  where u.id = uuid_to_bin(?) ';
-    let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
-    return user[0];
-};
 
 const findUser = async (email) => {
     try {
@@ -109,20 +103,7 @@ const findUser = async (email) => {
     }
 }
 
-const getResetToken = async (id) => {
-    let query = ' SELECT BIN_TO_UUID(user_id) as user_id ,reset_token ,created_at from reset_password_link where user_id = uuid_to_bin(?) ';
-    let bindParams = [id];
-    let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
-    return user[0];
-}
 
-
-const deleteResetToken = async (id) => {
-    let query = ' delete from reset_password_link where user_id = uuid_to_bin(?) ';
-    let bindParams = [id];
-    let user = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.DELETE });
-    return true;
-}
 
 
 
