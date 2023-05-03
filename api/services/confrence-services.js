@@ -28,8 +28,9 @@ const editConfrence = async (data,id) => {
     return confrence[0];
 };
 
-const getConfrenceById = async (id) => {
-    let query = ` select * from confrence where id  = ?  and status = 'active' `
+const getConfrenceById = async (id,status=true) => {
+    let query = ` select * from confrence where id  = ? `;
+    if(status) query+= ` and status = 'active' `;
     let bindParams = [id]
     let confrence  = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
     return confrence[0];
@@ -122,6 +123,13 @@ const unRegisterConfrence= async (conference_id,user_id) => {
 
 }
 
+const getAllUsersOfConfrence = async (conference_id) => {
+    let query = ` select * from  confrence_speaker where confrence_id = ?  `
+    let bindParams = [conference_id]
+    let users = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    return users;
+}
+
 module.exports = {
     createConfrence,
     editConfrence,
@@ -129,5 +137,6 @@ module.exports = {
     getConfrenceById,
     getUserConfrence,
     registerConfrence,
-    unRegisterConfrence
+    unRegisterConfrence,
+    getAllUsersOfConfrence
 };

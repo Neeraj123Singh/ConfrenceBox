@@ -344,6 +344,41 @@
         }
       }
     },
+    "/confrence/getAllUsersOfConfrence": {
+      "post": {
+        "summary": "Get All Users of Confrence",
+        "description": "Get All Users of Confrence api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Get All Users of Confrence",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/registerConfrenceRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
     "/confrence/registerConfrence": {
       "post": {
         "summary": "Register Confrence",
@@ -599,7 +634,7 @@
     "registerConfrenceRequest": {
       "type": "object",
       "properties": {
-          "confrence_id": {
+          "conference_id": {
             "type": "string",
             "default": ""
           }
@@ -649,7 +684,7 @@
           "type": "string",
           "default": "I am a good lawyer"
          },
-         "profie_picture":{
+         "profile_picture":{
           "type": "string",
           "default": ""
          },

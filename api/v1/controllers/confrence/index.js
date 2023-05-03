@@ -1,6 +1,7 @@
 const { logger } = require("../../../helpers/logger");
 var ResHelper = require(_pathconst.FilesPath.ResHelper);
 var ConfrenceService = require(_pathconst.ServicesPath.ConfrenceService);
+var UserService = require(_pathconst.ServicesPath.UserService);
 var ConfrenceValidationV1 = require(_pathconst.ReqModelsPath.ConfrenceValidationV1);
 
 
@@ -127,13 +128,45 @@ const  leaveConfrence = async (req, res, next) => {
     }
 }
 
+const getAllUsersOfConfrence = async (req, res, next) => {
+    try {
+        const { error } = ConfrenceValidationV1.registerConfrence.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { conference_id} = req.body;
+            let confrence  = await ConfrenceService.getConfrenceById(conference_id,false);
+            if(!confrence){
+                ResHelper.apiResponse(res, false, "Confrence Not found", 400, {}, "");
+                return;
+            }
+            let users  = await ConfrenceService.getAllUsersOfConfrence(conference_id);
+            if(users.length !=0){
+                let userIds = [];
+                for(let i=0;i<users.length;i++){
+                    userIds.push(users[i].user_id);
+                }
+                users  = await UserService.getAllUsersWhereInId(userIds);
+                ResHelper.apiResponse(res, true, "Success", 200,users, "");
+            }else{
+                ResHelper.apiResponse(res, true, "Success", 200, {}, "");
+            }
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
+
 
 module.exports = {
     createConfrence,
     editConfrence,
     getAllConfrence,
     registerConfrence,
-    leaveConfrence
+    leaveConfrence,
+    getAllUsersOfConfrence
 
 };
 

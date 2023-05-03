@@ -11,7 +11,8 @@ nodeAcl.allow([
           '/updateUser',
           '/getAllConfrence',
           '/registerConfrence',
-          '/unRegisterConfrence'
+          '/unRegisterConfrence',
+          '/getAllUsersOfConfrence'
         ],
         permissions: ['*']
       },

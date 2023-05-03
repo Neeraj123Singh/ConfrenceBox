@@ -168,6 +168,13 @@ const findRole = async(role) =>{
     return role[0];
 }
 
+const getAllUsersWhereInId = async(ids) =>{
+    let query = ' select * from users u  where u.id in (?) ';
+    let bindParams = [ids];
+    let users  = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    return users;
+}
+
 
 module.exports = {
     signUp,
@@ -181,5 +188,6 @@ module.exports = {
     updateStatus,
     changeUserPassword,
     updateTokenDate,
-    findRole
+    findRole,
+    getAllUsersWhereInId
 };
