@@ -38,7 +38,11 @@ const  voteSpeaker = Joi.object({
 const topSpeakers = Joi.object({
     conference_id: Joi.string().required()
 });
-
+const sendCamapaign = Joi.object({
+    conference_id: Joi.string().required(),
+    speaker_id: Joi.string().required(),
+    email_template:Joi.string().required()
+});
 
 module.exports = {
   createConfrence,
@@ -47,6 +51,7 @@ module.exports = {
   registerConfrence,
   updateSpeaker,
   voteSpeaker,
-  topSpeakers
+  topSpeakers,
+  sendCamapaign
 }
 

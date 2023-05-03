@@ -16,7 +16,8 @@ exports.FilesPath = {
   V1Routes: appRoot + "/api/v1/routes/index.js",
   AuthHelper: appRoot + "/api/helpers/constantdata/authhelper.js",
   ResHelper: appRoot + "/api/helpers/response/response.js",
-  CommonHelper: appRoot + "/api/helpers/commonhelper.js"
+  CommonHelper: appRoot + "/api/helpers/commonhelper.js",
+  QueuePath: appRoot+ "/jobs/index.js"
 };
 
 

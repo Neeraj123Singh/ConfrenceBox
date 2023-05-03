@@ -29,6 +29,8 @@ Steps to initialize the project
 6. node server.js
 7. Change the baseUrl in swagger.json file
 8. For accessing the api's visit route -- {{baseUrl}}/api-docs
+9. change the connection configuraton for redis in job/index.js file 
+10.node jobs/index.js -- run this command to run the job queue
 
 And Your server will we running on the port you have provided
 
@@ -40,3 +42,14 @@ System Design  Diagram -
 
 Commit 1---
 Added migrations for db Schema and Seeder for roles table
+
+Commit -2 ---
+Added User Auth and CHange Password flow
+
+Commit 3---
+Added Api's related to Confrence 
+
+Commit 4 --- 
+Added Api's related to Voting
+
+Commit -- Added Schedular and Queue for Sending Campaigns

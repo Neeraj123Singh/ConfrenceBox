@@ -15,7 +15,7 @@
   "schemes": [
     "http"
   ],
-  "host": "localhost:3001",
+  "host": "localhost:3002",
   "basePath": "/v1/",
   "paths": {
     "/user/signUp": {
@@ -261,6 +261,41 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/changeUserStatusRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "examples": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/confrence/sendCamapaign": {
+      "post": {
+        "summary": "Send Campaign for a confrence for speaker",
+        "description": "Send Campaign for a confrence for speaker api's",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkZWFsZXJJZCI6MSwidXNlcklkIjoxLCJ1c2VyVHlwZSI6ImRlYWxlciIsImNyZWF0ZV90cyI6IjIwMjItMDgtMDJUMTc6MTk6MzYuMzgxWiIsImlhdCI6MTY1OTQ2MDc3Nn0.0YsN2ZLfX0j3Ma14lI-ov960K6IeP8Ml5k3TT1vgk3A"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "type": "string",
+            "description": "Send Campaign for a confrence for speaker",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/sendCamapaignRequest"
             }
           }
         ],
@@ -758,6 +793,24 @@
             "default": ""
           },
           "speaker_id": {
+            "type": "string",
+            "default": ""
+          }
+
+      }
+    },
+    "sendCamapaignRequest": {
+      "type": "object",
+      "properties": {
+          "conference_id": {
+            "type": "string",
+            "default": ""
+          },
+          "speaker_id": {
+            "type": "string",
+            "default": ""
+          },
+          "email_template": {
             "type": "string",
             "default": ""
           }

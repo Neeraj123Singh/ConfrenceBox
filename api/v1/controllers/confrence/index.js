@@ -3,6 +3,7 @@ var ResHelper = require(_pathconst.FilesPath.ResHelper);
 var ConfrenceService = require(_pathconst.ServicesPath.ConfrenceService);
 var UserService = require(_pathconst.ServicesPath.UserService);
 var ConfrenceValidationV1 = require(_pathconst.ReqModelsPath.ConfrenceValidationV1);
+var {emailQueue} = require(_pathconst.FilesPath.QueuePath);
 
 
 
@@ -248,6 +249,32 @@ const topSpeakers  = async (req, res, next) => {
     }
 }
 
+const sendCamapaign = async (req, res, next) => {
+    try {
+        const { error } = ConfrenceValidationV1.sendCamapaign.validate(req.body);
+        if (error) {
+            ResHelper.apiResponse(res, false, error.message, 401, {}, "");
+        } else {
+            let { conference_id,speaker_id,email_template} = req.body;
+            let confrence  = await ConfrenceService.getConfrenceById(conference_id);
+            if(!confrence){
+                ResHelper.apiResponse(res, false, "Confrence Not found or is Not Active", 400, {}, "");
+                return;
+            }
+            let userConfrence = await ConfrenceService.getUserConfrence(conference_id,speaker_id);
+            if(!userConfrence){
+                ResHelper.apiResponse(res, false, "  User is  not registered to the Confrence", 400, {}, "");
+                return;
+            }
+            emailQueue.add({ conference_id,speaker_id,email_template});
+            ResHelper.apiResponse(res, true, "Success", 201, {}, "");
+        }
+    }
+    catch (e) {
+        logger.error(e)
+        ResHelper.apiResponse(res, false, "Error occured during execution", 500, {}, "");
+    }
+}
 
 module.exports = {
     createConfrence,
@@ -258,7 +285,8 @@ module.exports = {
     getAllUsersOfConfrence,
     updateSpeaker,
     voteSpeaker,
-    topSpeakers
+    topSpeakers,
+    sendCamapaign
 };
 
 

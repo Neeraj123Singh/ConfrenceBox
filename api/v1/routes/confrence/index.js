@@ -17,6 +17,7 @@ router.post("/getAllUsersOfConfrence",AuthHelper.authorize, aclPermissions.getPe
 router.post("/updateSpeaker",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.updateSpeaker)
 router.post("/voteSpeaker",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.voteSpeaker)
 router.post("/topSpeakers",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.topSpeakers)
+router.post("/sendCamapaign",AuthHelper.authorize, aclPermissions.getPermissions, ConfrenceControllerV1.sendCamapaign)
 // run campaign for a conference
 
 

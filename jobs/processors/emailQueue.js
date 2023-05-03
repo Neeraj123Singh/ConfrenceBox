@@ -24,7 +24,6 @@ const sendEmail = function (emailBody, isHtml) {
             subject: emailBody.subject,
             html: emailBody.body
         };
-        console.log(mailOptions)
     } else {
         mailOptions = {
             from: process.env.FROM_EMAIL,
@@ -46,7 +45,23 @@ const sendEmail = function (emailBody, isHtml) {
 
 module.exports = async function (job) {
   try {
-
+    let data = job.data;
+    let query = ` select * from  confrence_speaker where confrence_id = ? `;
+    let bindParams = [data.conference_id];
+    let members = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    let userIds = [];
+    for(let i=0;i<members.length;i++){
+        userIds.push(members[i].user_id);
+    }
+    if(userIds.length==0){
+        return;
+    }
+    query = ` select * from  users where id  in (?) `;
+    bindParams = [userIds];
+    let users = await sequelize.query(query, { replacements: bindParams, type: QueryTypes.SELECT });
+    for(let i=0;i<users.length;i++){
+        sendEmail({to:users[i].email,subject:`Confrence Box Promotion For Speakers`,body:data.email_template},1)
+    }
   } catch (e) {
     console.log(e)
   }

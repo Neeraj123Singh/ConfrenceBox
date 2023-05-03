@@ -26,7 +26,8 @@ nodeAcl.allow([
          '/createConfrence',
          '/editConfrence',
          '/updateSpeaker',
-         '/topSpeakers'
+         '/topSpeakers',
+         '/sendCamapaign'
         ],
         permissions: ['*']
       },
